@@ -151,6 +151,7 @@ Plug 'terryma/vim-smooth-scroll'
 Plug 'rhysd/clever-f.vim'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'docunext/closetag.vim'
+Plug 'nvie/vim-flake8'
 
 " 自定义插件
 if filereadable(expand($HOME . '/.vimrc.plugins'))
