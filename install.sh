@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# 获取平台类型，mac还是linux平台
-function get_platform_type()
-{
-    echo $(uname)
-}
-
 # 获取linux发行版名称
 function get_linux_distro()
 {
@@ -74,37 +68,37 @@ function backup_vimrc_file()
         time=$(get_datetime)
         backup_vimrc=$old_vimrc"_bak_"$time
         read -p "Find "$old_vimrc" already exists,backup "$old_vimrc" to "$backup_vimrc"? [Y/N] " ch
-        if [ $ch == "Y" ] || [ $ch == "y" ]; then
+        if [[ $ch == "Y" ]] || [[ $ch == "y" ]]; then
             cp $old_vimrc $backup_vimrc
         fi
     fi
 }
 
-#备份原有的.vimrc.plugins文件
-function backup_vimrc_plugins_file()
+#备份原有的.vimrc.custom.plugins文件
+function backup_vimrc_custom_plugins_file()
 {
-    old_vimrc_plugins=$HOME"/.vimrc.plugins"
+    old_vimrc_plugins=$HOME"/.vimrc.custom.plugins"
     is_exist=$(is_exist_file $old_vimrc_plugins)
     if [ $is_exist == 1 ]; then
         time=$(get_datetime)
         backup_vimrc_plugins=$old_vimrc_plugins"_bak_"$time
         read -p "Find "$old_vimrc_plugins" already exists,backup "$old_vimrc_plugins" to "$backup_vimrc_plugins"? [Y/N] " ch
-        if [ $ch == "Y" ] || [ $ch == "y" ]; then
+        if [[ $ch == "Y" ]] || [[ $ch == "y" ]]; then
             cp $old_vimrc_plugins $backup_vimrc_plugins
         fi
     fi
 }
 
-#备份原有的.vimrc.config文件
-function backup_vimrc_config_file()
+#备份原有的.vimrc.custom.config文件
+function backup_vimrc_custom_config_file()
 {
-    old_vimrc_config=$HOME"/.vimrc.config"
+    old_vimrc_config=$HOME"/.vimrc.custom.config"
     is_exist=$(is_exist_file $old_vimrc_config)
     if [ $is_exist == 1 ]; then
         time=$(get_datetime)
         backup_vimrc_config=$old_vimrc_config"_bak_"$time
         read -p "Find "$old_vimrc_config" already exists,backup "$old_vimrc_config" to "$backup_vimrc_config"? [Y/N] " ch
-        if [ $ch == "Y" ] || [ $ch == "y" ]; then
+        if [[ $ch == "Y" ]] || [[ $ch == "y" ]]; then
             cp $old_vimrc_config $backup_vimrc_config
         fi
     fi
@@ -119,7 +113,7 @@ function backup_vim_dir()
         time=$(get_datetime)
         backup_vim=$old_vim"_bak_"$time
         read -p "Find "$old_vim" already exists,backup "$old_vim" to "$backup_vim"? [Y/N] " ch
-        if [ $ch == "Y" ] || [ $ch == "y" ]; then
+        if [[ $ch == "Y" ]] || [[ $ch == "y" ]]; then
             cp -R $old_vim $backup_vim
         fi
     fi
@@ -129,8 +123,8 @@ function backup_vim_dir()
 function backup_vimrc_and_vim()
 {
     backup_vimrc_file
-    backup_vimrc_plugins_file
-    backup_vimrc_config_file
+    backup_vimrc_custom_plugins_file
+    backup_vimrc_custom_config_file
     backup_vim_dir
 }
 
@@ -165,20 +159,13 @@ function is_macos1014()
 # 在ubuntu上源代码安装vim
 function compile_vim_on_ubuntu()
 {
-    sudo apt-get remove -y vim vim-runtime gvim
-    sudo apt-get remove -y vim-tiny vim-common vim-gui-common vim-nox
-    sudo rm -rf /usr/bin/vim*
-    sudo rm -rf /usr/local/bin/vim*
-    sudo rm -rf /usr/share/vim/vim*
-    sudo rm -rf /usr/local/share/vim/vim*
-    rm -rf ~/vim81
-
     sudo apt-get install -y libncurses5-dev libncurses5 libgnome2-dev libgnomeui-dev \
         libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
         libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev python3-dev ruby-dev lua5.1 lua5.1-dev
 
-    git clone https://gitee.com/chxuan/vim81.git ~/vim81
-    cd ~/vim81
+    rm -rf ~/vim82
+    git clone https://gitee.com/chxuan/vim82.git ~/vim82
+    cd ~/vim82
     ./configure --with-features=huge \
         --enable-multibyte \
         --enable-rubyinterp \
@@ -197,18 +184,11 @@ function compile_vim_on_ubuntu()
 # 在debian上源代码安装vim
 function compile_vim_on_debian()
 {
-    sudo apt-get remove -y vim vim-runtime gvim
-    sudo apt-get remove -y vim-tiny vim-common vim-gui-common vim-nox
-    sudo rm -rf /usr/bin/vim*
-    sudo rm -rf /usr/local/bin/vim*
-    sudo rm -rf /usr/share/vim/vim*
-    sudo rm -rf /usr/local/share/vim/vim*
-    rm -rf ~/vim81
-
     sudo apt-get install -y libncurses5-dev libncurses5 libgtk2.0-dev libatk1.0-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev python3-dev ruby-dev lua5.1 lua5.1-dev
 
-    git clone https://gitee.com/chxuan/vim81.git ~/vim81
-    cd ~/vim81
+    rm -rf ~/vim82
+    git clone https://gitee.com/chxuan/vim82.git ~/vim82
+    cd ~/vim82
     ./configure --with-features=huge \
         --enable-multibyte \
         --enable-rubyinterp \
@@ -227,13 +207,6 @@ function compile_vim_on_debian()
 # 在centos上源代码安装vim
 function compile_vim_on_centos()
 {
-    sudo rm -rf /usr/bin/vi
-    sudo rm -rf /usr/bin/vim*
-    sudo rm -rf /usr/local/bin/vim*
-    sudo rm -rf /usr/share/vim/vim*
-    sudo rm -rf /usr/local/share/vim/vim*
-    rm -rf ~/vim81
-
     sudo yum install -y ruby ruby-devel lua lua-devel luajit \
         luajit-devel ctags git python python-devel \
         python34 python34-devel tcl-devel \
@@ -241,8 +214,9 @@ function compile_vim_on_centos()
         perl-ExtUtils-XSpp perl-ExtUtils-CBuilder \
         perl-ExtUtils-Embed libX11-devel ncurses-devel
     
-    git clone https://gitee.com/chxuan/vim81.git ~/vim81
-    cd ~/vim81
+    rm -rf ~/vim82
+    git clone https://gitee.com/chxuan/vim82.git ~/vim82
+    cd ~/vim82
     ./configure --with-features=huge \
         --enable-multibyte \
         --with-tlib=tinfo \
@@ -270,6 +244,13 @@ function install_prepare_software_on_mac()
     if [ $macos1014 == 1 ]; then
         open /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg
     fi
+}
+
+# 安装android平台必备软件
+function install_prepare_software_on_android()
+{
+    pkg update
+    pkg install -y git vim-python cmake python2 python ctags ack-grep ncurses-utils
 }
 
 # 安装ubuntu必备软件
@@ -347,11 +328,11 @@ function copy_files()
     rm -rf ~/.vimrc
     ln -s ${PWD}/.vimrc ~
 
-    rm -rf ~/.vimrc.plugins
-    cp ${PWD}/.vimrc.plugins ~
+    rm -rf ~/.vimrc.custom.plugins
+    cp ${PWD}/.vimrc.custom.plugins ~
 
-    rm -rf ~/.vimrc.config
-    cp ${PWD}/.vimrc.config ~
+    rm -rf ~/.vimrc.custom.config
+    cp ${PWD}/.vimrc.custom.config ~
 
     rm -rf ~/.ycm_extra_conf.py
     ln -s ${PWD}/.ycm_extra_conf.py ~
@@ -372,6 +353,18 @@ function install_fonts_on_mac()
 {
     rm -rf ~/Library/Fonts/Droid\ Sans\ Mono\ Nerd\ Font\ Complete.otf
     cp ./fonts/Droid\ Sans\ Mono\ Nerd\ Font\ Complete.otf ~/Library/Fonts
+}
+
+# 安装android平台字体
+function install_fonts_on_android()
+{
+    rm -rf ~/.termux/font.ttf
+    mkdir ~/.termux
+    cp ./fonts/DejaVu.ttf ~/.termux/font.ttf
+
+    # 刷新style
+    REL="am broadcast --user 0 -a com.termux.app.reload_style com.termux"
+    $REL > /dev/null
 }
 
 # 安装linux平台字体
@@ -407,6 +400,23 @@ function install_ycm()
     fi
 }
 
+# 在android上安装ycm插件
+function install_ycm_on_android()
+{
+    git clone https://gitee.com/chxuan/YouCompleteMe-clang.git ~/.vim/plugged/YouCompleteMe
+
+    cd ~/.vim/plugged/YouCompleteMe
+
+    read -p "Please choose to compile ycm with python2 or python3, if there is a problem with the current selection, please choose another one. [2/3] " version
+    if [[ $version == "2" ]]; then
+        echo "Compile ycm with python2."
+        python2.7 ./install.py --clang-completer --system-libclang
+    else
+        echo "Compile ycm with python3."
+        python3 ./install.py --clang-completer --system-libclang
+    fi
+}
+
 # 打印logo
 function print_logo()
 {
@@ -435,6 +445,18 @@ function install_vimplus_on_mac()
     copy_files
     install_fonts_on_mac
     install_ycm
+    install_vim_plugin
+    print_logo
+}
+
+# 在android平台安装vimplus
+function install_vimplus_on_android()
+{
+    backup_vimrc_and_vim
+    install_prepare_software_on_android
+    copy_files
+    install_fonts_on_android
+    install_ycm_on_android
     install_vim_plugin
     print_logo
 }
@@ -550,13 +572,19 @@ function main()
 {
     begin=`get_now_timestamp`
 
-    type=`get_platform_type`
+    type=$(uname)
     echo "Platform type: "${type}
 
     if [ ${type} == "Darwin" ]; then
         install_vimplus_on_mac
     elif [ ${type} == "Linux" ]; then
-        install_vimplus_on_linux
+        tp=$(uname -a)
+        if [[ $tp =~ "Android" ]]; then
+            echo "Android"
+            install_vimplus_on_android
+        else
+            install_vimplus_on_linux
+        fi
     else
         echo "Not support platform type: "${type}
     fi

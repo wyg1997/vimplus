@@ -5,7 +5,7 @@ An automatic configuration program for vim
 
 <p align="center">
     <a href="#build" alt="build"><img src="https://img.shields.io/badge/build-passing-brightgreen.svg" /></a>
-    <a href="#安装" alt="platform"><img src="https://img.shields.io/badge/platform-MacOSX%20%7C%20Linux%2064bit%20%7C%20Docker%20%7C%20WSL-brightgreen.svg" /></a>
+    <a href="#安装" alt="platform"><img src="https://img.shields.io/badge/platform-MacOSX%20%7C%20Linux%2064bit%20%7C%20Docker%20%7C%20WSL%20%7C%20Android-brightgreen.svg" /></a>
     <a href="https://github.com/chxuan/vimplus/stargazers" alt="stars"><img src="https://img.shields.io/github/stars/chxuan/vimplus.svg?style=popout&label=stars" /></a>
     <a href="https://github.com/chxuan/vimplus/forks" alt="forks"><img src="https://img.shields.io/github/forks/chxuan/vimplus.svg?style=popout&label=forks" /></a>
     <a href="https://github.com/chxuan/vimplus/graphs/contributors" alt="contributors"><img src="https://img.shields.io/github/contributors/chxuan/vimplus" /></a>
@@ -86,6 +86,21 @@ An automatic configuration program for vim
     ./update.sh
 
 
+### Android 64-bit([Termux][87])
+
+#### 安装vimplus
+
+    git clone https://github.com/chxuan/vimplus.git ~/.vimplus
+    cd ~/.vimplus
+    ./install.sh
+    
+#### 更新vimplus
+
+紧跟vimplus的步伐，尝鲜新特性
+
+    ./update.sh
+    
+
 ### Docker
 
 [ubuntu-vimplus][79]是vimplus基于ubuntu18.04的docker镜像，无需安装vimplus，即可快速体验vimplus带来的快乐
@@ -95,7 +110,9 @@ An automatic configuration program for vim
 
 ## 自定义
 
-`~/.vimrc`为vimplus的默认配置，一般不做修改，若要增加插件，请修改 `~/.vimrc.plugins`，其他配置请放入`~/.vimrc.config`。
+> * [~/.vimrc][82]为vimplus的默认配置，一般不做修改
+> * [~/.vimrc.custom.plugins][83]为用户自定义插件列表，用户增加、卸载插件请修改该文件
+> * [~/.vimrc.custom.config][84]为用户自定义配置文件，一般性配置请放入该文件，可覆盖[~/.vimrc][82]里的配置
 
 
 ## 插件列表
@@ -138,72 +155,80 @@ An automatic configuration program for vim
 
 以下是部分快捷键，可通过vimplus的`,h`命令查看[vimplus帮助文档][59]。
 
-| 快捷键              | 说明                                 |
-| -------             | -----                                |
-| `,`                 | Leader Key                           |
-| `<leader>n`         | 打开/关闭代码资源管理器              |
-| `<leader>t`         | 打开/关闭函数列表                    |
-| `<leader>a`         | .h .cpp 文件切换                     |
-| `<leader>u`         | 转到函数声明                         |
-| `<leader>U`         | 转到函数实现                         |
-| `<leader>u`         | 转到变量声明                         |
-| `<leader>o`         | 打开include文件                      |
-| `<leader>y`         | 拷贝函数声明                         |
-| `<leader>p`         | 生成函数实现                         |
-| `<leader>w`         | 单词跳转                             |
-| `<leader>f`         | 搜索~目录下的文件                    |
-| `<leader>F`         | 搜索当前目录下的文本                 |
-| `<leader>g`         | 显示git仓库提交记录                  |
-| `<leader>G`         | 显示当前文件提交记录                 |
-| `<leader>gg`        | 显示当前文件在某个commit下的完整内容 |
-| `<leader>ff`        | 语法错误自动修复(FixIt)              |
-| `<c-p>`             | 切换到上一个buffer                   |
-| `<c-n>`             | 切换到下一个buffer                   |
-| `<leader>d`         | 删除当前buffer                       |
-| `<leader>D`         | 删除当前buffer外的所有buffer         |
-| `vim`               | 运行vim编辑器时,默认启动开始页面     |
-| `<F5>`              | 显示语法错误提示窗口                 |
-| `<F9>`              | 显示上一主题                         |
-| `<F10>`             | 显示下一主题                         |
-| `<leader>l`         | 按竖线对齐                           |
-| `<leader>=`         | 按等号对齐                           |
-| `Ya`                | 复制行文本到字母a                    |
-| `Da`                | 剪切行文本到字母a                    |
-| `Ca`                | 改写行文本到字母a                    |
-| `rr`                | 替换文本                             |
-| `<leader>r`         | 全局替换，目前只支持单个文件         |
-| `gcc`               | 注释代码                             |
-| `gcap`              | 注释段落                             |
-| `vif`               | 选中函数内容                         |
-| `dif`               | 删除函数内容                         |
-| `cif`               | 改写函数内容                         |
-| `vaf`               | 选中函数内容（包括函数名 花括号）    |
-| `daf`               | 删除函数内容（包括函数名 花括号）    |
-| `caf`               | 改写函数内容（包括函数名 花括号）    |
-| `fa`                | 查找字母a，然后再按f键查找下一个     |
-| `<leader>e`         | 快速编辑vimrc文件                    |
-| `<leader>s`         | 重新加载vimrc文件                    |
-| `<leader>h`         | 打开vimplus帮助文档                  |
-| `<leader>H`         | 打开当前光标所在单词的vim帮助文档    |
-| `<leader><leader>y` | 复制当前选中到系统剪切板             |
-| `<leader><leader>i` | 安装插件                             |
-| `<leader><leader>u` | 更新插件                             |
-| `<leader><leader>c` | 删除插件                             |
+| 快捷键              | 说明                                      |
+| -------             | -----                                     |
+| `,`                 | Leader Key                                |
+| `<leader>n`         | 打开/关闭代码资源管理器                   |
+| `<leader>t`         | 打开/关闭函数列表                         |
+| `<leader>a`         | .h .cpp 文件切换                          |
+| `<leader>u`         | 转到函数声明                              |
+| `<leader>U`         | 转到函数实现                              |
+| `<leader>u`         | 转到变量声明                              |
+| `<leader>o`         | 打开include文件                           |
+| `<leader>y`         | 拷贝函数声明                              |
+| `<leader>p`         | 生成函数实现                              |
+| `<leader>w`         | 单词跳转                                  |
+| `<leader>f`         | 搜索~目录下的文件                         |
+| `<leader>F`         | 搜索当前目录下的文本                      |
+| `<leader>g`         | 显示git仓库提交记录                       |
+| `<leader>G`         | 显示当前文件提交记录                      |
+| `<leader>gg`        | 显示当前文件在某个commit下的完整内容      |
+| `<leader>ff`        | 语法错误自动修复(FixIt)                   |
+| `<c-p>`             | 切换到上一个buffer                        |
+| `<c-n>`             | 切换到下一个buffer                        |
+| `<leader>d`         | 删除当前buffer                            |
+| `<leader>D`         | 删除当前buffer外的所有buffer              |
+| `vim`               | 运行vim编辑器时,默认启动开始页面          |
+| `<F5>`              | 显示语法错误提示窗口                      |
+| `<F9>`              | 显示上一主题                              |
+| `<F10>`             | 显示下一主题                              |
+| `<leader>l`         | 按竖线对齐                                |
+| `<leader>=`         | 按等号对齐                                |
+| `Ya`                | 复制行文本到字母a                         |
+| `Da`                | 剪切行文本到字母a                         |
+| `Ca`                | 改写行文本到字母a                         |
+| `rr`                | 替换文本                                  |
+| `<leader>r`         | 全局替换，目前只支持单个文件              |
+| `rev`               | 翻转当前光标下的单词或使用V模式选择的文本 |
+| `gcc`               | 注释代码                                  |
+| `gcap`              | 注释段落                                  |
+| `vif`               | 选中函数内容                              |
+| `dif`               | 删除函数内容                              |
+| `cif`               | 改写函数内容                              |
+| `vaf`               | 选中函数内容（包括函数名 花括号）         |
+| `daf`               | 删除函数内容（包括函数名 花括号）         |
+| `caf`               | 改写函数内容（包括函数名 花括号）         |
+| `fa`                | 查找字母a，然后再按f键查找下一个          |
+| `<leader>e`         | 快速编辑~/.vimrc文件                      |
+| `<leader>s`         | 重新加载~/.vimrc文件                      |
+| `<leader>vp`        | 快速编辑~/.vimrc.custom.plugins文件       |
+| `<leader>vc`        | 快速编辑~/.vimrc.custom.config文件        |
+| `<leader>h`         | 打开vimplus帮助文档                       |
+| `<leader>H`         | 打开当前光标所在单词的vim帮助文档         |
+| `<leader><leader>t` | 生成try-catch代码块                       |
+| `<leader><leader>y` | 复制当前选中到系统剪切板                  |
+| `<leader><leader>i` | 安装插件                                  |
+| `<leader><leader>u` | 更新插件                                  |
+| `<leader><leader>c` | 删除插件                                  |
 
 
 ## FAQ
+
+- **`vimplus怎么安装新插件？`**
+
+    编辑[~/.vimrc.custom.plugins][83]，添加自定义插件。
+
+- **`vimplus怎么添加自定义配置？`**
+
+    编辑[~/.vimrc.custom.config][84]，添加自定义配置。
 
 - **`vimplus安装脚本会在自己电脑上安装哪些软件？`**
 
     网络良好情况下，vimplus只需30分钟左右即可将vim cpp环境配置好，vimplus真正的做到了一键配置，不让用户操心。vimplus会安装一些必备软件，比如说python、cmake、gcc、fontconfig等，vimplus也考虑到了有些系统的vim不支持python，它会自动去下载vim源码将python支持编译进去，vimplus也会安装nerd-font不让vim显示出现乱码，最最重要的是vimplus实现了ycm自动编译安装，给折腾了几天ycm都没有安装好的用户带来了新的希望，而且vimplus也支持macos和linux众多发行版，让linux发烧友频繁切换发行版而不用操心vim环境配置。最后说了这么多，不如看[vimplus安装脚本][78]来的直接:smile:。
 
-- **`插件安装界面显示YouCompleteMe安装失败，Invalid URL: https://gitee.com/chxuan/YouCompleteMe.git,Expected: https://github.com/Valloric/YouCompleteMe.git,PlugClean: required`**
+- **`启动vim报错：RequestsDependencyWarning: Old version of cryptography ([1, 2, 3]) may cause slowdown.`**
 
-    在执行install.sh安装脚本时，ycm比其他插件早安装，当用户看到插件安装界面显示ycm安装失败时，其实ycm已经提前安装好了，忽略掉该错误即可。
-
-- **`插件安装界面不更新进度，一直显示进度Installing plugins (24/40)`**
-
-    vimplus使用vim-plug作为插件管理器，vim-plug可能由于界面没有刷新（其实在安装），所以进度一直停留在`Installing plugins (24/40)`，用户只需要耐心等待所有插件安装完成即可，或者直接`Ctrl+C`终止安装，通过vim打开`~/.vimrc`并执行`:PlugInstall`命令安装剩余插件。
+    可以尝试将cryptography删掉，具体见[issues #208][81]。
 
 - **`vimplus不支持目前用户正在使用的系统怎么办？`**
 
@@ -225,6 +250,10 @@ An automatic configuration program for vim
 
     vimplus安装完毕之后，`~`目录下将会生成两个隐藏文件分别是.vimrc和.ycm_extra_conf.py，其中.vimrc是vim的配置文件，.ycm_extra_conf.py是ycm插件的配置文件，当你需要创建一个project时，需要将.ycm_extra_conf.py拷贝到project的顶层目录，通过修改该配置文件里面的`flags`变量来添加你的第三方库路径。
 
+- **`使用vi命令报错：E492: Not an editor command:`**
+
+    vimplus安装完成后，linux下可能会同时存在vi和vim命令，执行vi时，vi加载~/.vimrc文件可能会报错，但不影响使用，如果要消除错误可以设置软链接`ln -s /usr/bin/vim /usr/bin/vi`
+
 - **`怎么自定义文件头，比如说添加作者、创建时间？`**
 
     你可以修改[chxuan/prepare-code][67]插件来达到目的，可以参考[这里][77]。
@@ -242,7 +271,9 @@ An automatic configuration program for vim
     那就麻烦您打赏一颗:star::star:吧，给予我继续维护的动力。
 
 
-## 代码贡献者
+## 贡献者
+
+> 有代码贡献或有好的建议，帮助vimplus发展的小伙伴
 
 <a href="https://github.com/chxuan" target="_blank" title="chxuan">
 <img src="https://github.com/chxuan.png?size=64" width="64" height="64" alt="chxuan">
@@ -271,12 +302,20 @@ An automatic configuration program for vim
 <a href="https://github.com/zhoumengkang" target="_blank" title="zhoumengkang">
 <img src="https://github.com/zhoumengkang.png?size=64" width="64" height="64" alt="zhoumengkang">
 </a>
-<a href="https://github.com/Titubery" target="_blank" title="Titubery">
-<img src="https://github.com/Titubery.png?size=64" width="64" height="64" alt="Titubery">
+<a href="https://github.com/tuberry" target="_blank" title="tuberry">
+<img src="https://github.com/tuberry.png?size=64" width="64" height="64" alt="tuberry">
+</a>
+<a href="https://github.com/wyg1997" target="_blank" title="wyg1997">
+<img src="https://github.com/wyg1997.png?size=64" width="64" height="64" alt="wyg1997">
+</a>
+<a href="https://github.com/happinesslijian" target="_blank" title="happinesslijian">
+<img src="https://github.com/happinesslijian.png?size=64" width="64" height="64" alt="happinesslijian">
 </a>
 
 
 ## 支持开源:heart:
+
+> 有意愿献爱心的小伙伴，务必将github账号写入捐款备注哦，谢谢大家
 
 | wechat                                                                                                     | alipay                                                                                                       |
 | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
@@ -286,6 +325,8 @@ An automatic configuration program for vim
 | ----- | -------            | ----- | -----      |
 | 1     | [zhoumengkang][80] | ¥50   | 2019-09-28 |
 | 2     | [zhoumengkang][80] | ¥50   | 2019-09-29 |
+| 3     | [zibraque][85]     | ¥50   | 2019-11-25 |
+| 4     | [gfreewind][86]    | ¥20   | 2019-12-27 |
 
 
 ## vimplus:star:趋势图
@@ -347,4 +388,11 @@ This software is licensed under the [MIT license][75]. © 2016 chxuan
   [78]: https://github.com/chxuan/vimplus/blob/master/install.sh
   [79]: https://hub.docker.com/r/chxuan/ubuntu-vimplus
   [80]: https://github.com/zhoumengkang
+  [81]: https://github.com/chxuan/vimplus/issues/208
+  [82]: https://github.com/chxuan/vimplus/blob/master/.vimrc
+  [83]: https://github.com/chxuan/vimplus/blob/master/.vimrc.custom.plugins
+  [84]: https://github.com/chxuan/vimplus/blob/master/.vimrc.custom.config
+  [85]: https://github.com/zibraque
+  [86]: https://github.com/gfreewind
+  [87]: https://termux.com/
 

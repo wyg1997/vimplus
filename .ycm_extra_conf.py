@@ -79,11 +79,21 @@ flags = [
 '-isystem',
 '/usr/include/c++/9.1.0',
 '-isystem',
+'/usr/include/c++/9.3.0',
+'-isystem',
 '/usr/include',
 '-isystem',
 '/usr/include/x86_64-linux-gnu',
 '-isystem',
 '/usr/local/include',
+
+# Termux
+'-isystem',
+'/data/data/com.termux/files/usr/include',
+'-isystem',
+'/data/data/com.termux/files/usr/include/c++/v1',
+'-isystem',
+'/data/data/com.termux/files/usr/include/c++/v1/experimental',
 ]
 
 

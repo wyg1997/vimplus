@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# 获取平台类型，mac还是linux平台
-function get_platform_type()
-{
-    echo $(uname)
-}
-
 # 判断文件是否存在
 function is_exist_file()
 {
@@ -22,6 +16,18 @@ function update_fonts_on_mac()
 {
     rm -rf ~/Library/Fonts/Droid\ Sans\ Mono\ Nerd\ Font\ Complete.otf
     cp ./fonts/Droid\ Sans\ Mono\ Nerd\ Font\ Complete.otf ~/Library/Fonts
+}
+
+# 更新android平台字体
+function update_fonts_on_android()
+{
+    rm -rf ~/.termux/font.ttf
+    mkdir ~/.termux
+    cp ./fonts/DejaVu.ttf ~/.termux/font.ttf
+
+    # 刷新style
+    REL="am broadcast --user 0 -a com.termux.app.reload_style com.termux"
+    $REL > /dev/null
 }
 
 # 更新linux平台字体
@@ -43,17 +49,32 @@ function update_vim_plugin()
 # 拷贝文件
 function copy_files()
 {
-    vimrc_plugins=$HOME"/.vimrc.plugins"
+    rm -rf ~/.vimrc
+    ln -s ${PWD}/.vimrc ~
+
+    vimrc_plugins=$HOME"/.vimrc.custom.plugins"
     is_exist=$(is_exist_file $vimrc_plugins)
     if [ $is_exist != 1 ]; then
-        cp ${PWD}/.vimrc.plugins ~
+        cp ${PWD}/.vimrc.custom.plugins ~
     fi
 
-    vimrc_config=$HOME"/.vimrc.config"
+    vimrc_config=$HOME"/.vimrc.custom.config"
     is_exist=$(is_exist_file $vimrc_config)
     if [ $is_exist != 1 ]; then
-        cp ${PWD}/.vimrc.config ~
+        cp ${PWD}/.vimrc.custom.config ~
     fi
+
+    rm -rf ~/.ycm_extra_conf.py
+    ln -s ${PWD}/.ycm_extra_conf.py ~
+
+    rm -rf ~/.vim/colors
+    ln -s ${PWD}/colors ~/.vim
+
+    rm -rf ~/.vim/ftplugin
+    ln -s ${PWD}/ftplugin ~/.vim
+
+    rm -rf ~/.vim/autoload
+    ln -s ${PWD}/autoload ~/.vim
 }
 
 # 打印logo
@@ -96,6 +117,16 @@ function update_vimplus_on_linux()
     print_logo
 }
 
+# 在android更新vimplus
+function update_vimplus_on_android()
+{
+    git pull origin master
+    copy_files
+    update_fonts_on_android
+    update_vim_plugin
+    print_logo
+}
+
 # 获取当前时间戳
 function get_now_timestamp()
 {
@@ -108,13 +139,19 @@ function main()
 {
     begin=`get_now_timestamp`
 
-    type=`get_platform_type`
+    type=$(uname)
     echo "Platform type: "${type}
 
     if [ ${type} == "Darwin" ]; then
         update_vimplus_on_mac
     elif [ ${type} == "Linux" ]; then
-        update_vimplus_on_linux
+        tp=$(uname -a)
+        if [[ $tp =~ "Android" ]]; then
+            echo "Android"
+            update_vimplus_on_android
+        else
+            update_vimplus_on_linux
+        fi
     else
         echo "Not support platform type: "${type}
     fi
