@@ -314,7 +314,7 @@ map <leader>w <Plug>(easymotion-bd-w)
 nmap <leader>w <Plug>(easymotion-overwin-w)
 
 " nerdtree-git-plugin
-let g:NERDTreeIndicatorMapCustom = {
+let g:NERDTreeGitStatusIndicatorMapCustom = {
             \ "Modified"  : "✹",
             \ "Staged"    : "✚",
             \ "Untracked" : "✭",
@@ -362,3 +362,5 @@ if filereadable(expand($HOME . '/.vimrc.custom.config'))
 endif
 
 
+
+let g:ycm_server_python_interpreter = '/root/.pyenv/versions/3.8.5/bin/python3.8'
